@@ -1,10 +1,15 @@
-require 'test/unit'
-
 require 'rubygems'
+require 'bundler'
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+require 'test/unit'
 require 'active_record'
-
-$:.unshift File.dirname(__FILE__) + '/../lib'
-require File.dirname(__FILE__) + '/../init'
+require "#{File.dirname(__FILE__)}/../init"
 
 class Test::Unit::TestCase
   def assert_queries(num = 1)
@@ -19,7 +24,7 @@ class Test::Unit::TestCase
   end
 end
 
-ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :dbfile => ":memory:")
+ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
 
 # AR keeps printing annoying schema statements
 $stdout = StringIO.new
