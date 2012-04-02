@@ -160,15 +160,6 @@ class TreeTest < Test::Unit::TestCase
     assert_equal [@root2], @root2.self_and_children
   end
   
-  def test_all_children
-    assert_equal [@root_child1, @root_child2, @child1_child, @child1_child_child] - @root1.all_children, [] 
-    assert_equal @root2.all_children, []
-  end
-  
-  def test_self_and_all_children
-    assert_equal [@root1, @root_child1, @root_child2, @child1_child, @child1_child_child] - @root1.self_and_all_children, [] 
-    assert_equal @root2.self_and_all_children - [@root2], [] 
-  end
 end
 
 class TreeTestWithEagerLoading < Test::Unit::TestCase
