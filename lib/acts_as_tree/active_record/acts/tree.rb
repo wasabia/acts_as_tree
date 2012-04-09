@@ -55,8 +55,10 @@ module ActiveRecord
           configuration = { 
             :foreign_key   => "parent_id",
             :order         => nil,
-            :counter_cache => nil
+            :counter_cache => nil,
+            :dependent     => :destroy
           }
+
           configuration.update(options) if options.is_a?(Hash)
 
           belongs_to :parent, :class_name => name,
@@ -67,7 +69,7 @@ module ActiveRecord
           has_many :children, :class_name => name,
             :foreign_key => configuration[:foreign_key],
             :order       => configuration[:order],
-            :dependent   => :destroy,
+            :dependent   => configuration[:dependent],
             :inverse_of  => :parent
 
           class_eval <<-EOV

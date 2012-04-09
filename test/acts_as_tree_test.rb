@@ -47,6 +47,10 @@ class TreeMixinWithoutOrder < Mixin
   acts_as_tree :foreign_key => "parent_id"
 end
 
+class TreeMixinNullify < Mixin
+  acts_as_tree :foreign_key => "parent_id", :order => "id", :dependent => :nullify
+end
+
 class RecursivelyCascadedTreeMixin < Mixin
   acts_as_tree :foreign_key => "parent_id"
   has_one :first_child, :class_name => 'RecursivelyCascadedTreeMixin', :foreign_key => :parent_id
@@ -149,6 +153,16 @@ class TreeTest < Test::Unit::TestCase
   def test_self_and_children
     assert_equal [@root1, @root_child1, @root_child2], @root1.self_and_children
     assert_equal [@root2], @root2.self_and_children
+  end
+
+  def test_nullify
+    root4 = TreeMixinNullify.create!
+    root4_child = TreeMixinNullify.create! :parent_id => root4.id
+    assert_equal 2, TreeMixinNullify.count
+    assert_equal root4.id, root4_child.parent_id
+    root4.destroy
+    assert_equal 1, TreeMixinNullify.count
+    assert_nil root4_child.reload.parent_id
   end
 
 end
