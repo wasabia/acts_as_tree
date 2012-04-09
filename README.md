@@ -5,7 +5,7 @@
 A gem that extends ActiveRecord to add simple support for organizing items into
 parent–children relationships.
 
-## Examples
+## Example
 
     class Category < ActiveRecord::Base
       acts_as_tree :order => "name"
