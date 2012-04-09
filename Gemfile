@@ -1,6 +1,7 @@
-source "http://rubygems.org"
+source :rubygems
 
-# Specify your gem's dependencies in acts_as_tree.gemspec
 gemspec
 
-gem 'rake'
+group :test do
+  gem 'rake'
+end

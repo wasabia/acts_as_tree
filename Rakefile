@@ -1,19 +1,12 @@
-require 'bundler'
-Bundler::GemHelper.install_tasks
+require 'bundler/gem_tasks'
 
-#require 'rake'
-require 'rake/testtask'
-
-# Run the test with 'rake' or 'rake test'
-desc 'Default: run acts_as_tree unit tests.'
-task :default => :test
-
-desc 'Test the acts_as_tree plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib' << 'test'
-  t.pattern = 'test/**/test_*.rb'
-  t.verbose = false
+desc "Run the tests."
+task :test do
+  $: << "lib" << "test"
+  Dir["test/*_test.rb"].each { |f| require f[5..-4] }
 end
+
+task :default => :test
 
 # Run the rdoc task to generate rdocs for this gem
 require 'rdoc/task'
