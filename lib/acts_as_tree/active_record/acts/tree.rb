@@ -5,8 +5,10 @@ module ActiveRecord
         base.extend(ClassMethods)
       end
 
-      # Specify this +acts_as+ extension if you want to model a tree structure by providing a parent association and a children
-      # association. This requires that you have a foreign key column, which by default is called +parent_id+.
+      # Specify this +acts_as+ extension if you want to model a tree structure
+      # by providing a parent association and a children association. This
+      # requires that you have a foreign key column, which by default is called
+      # +parent_id+.
       #
       #   class Category < ActiveRecord::Base
       #     acts_as_tree :order => "name"
@@ -27,34 +29,58 @@ module ActiveRecord
       #   root.children # => [child1]
       #   root.children.first.children.first # => subchild1
       #
-      # In addition to the parent and children associations, the following instance methods are added to the class
-      # after calling <tt>acts_as_tree</tt>:
-      # * <tt>siblings</tt> - Returns all the children of the parent, excluding the current node (<tt>[subchild2]</tt> when called on <tt>subchild1</tt>)
-      # * <tt>self_and_siblings</tt> - Returns all the children of the parent, including the current node (<tt>[subchild1, subchild2]</tt> when called on <tt>subchild1</tt>)
-      # * <tt>ancestors</tt> - Returns all the ancestors of the current node (<tt>[child1, root]</tt> when called on <tt>subchild2</tt>)
-      # * <tt>root</tt> - Returns the root of the current node (<tt>root</tt> when called on <tt>subchild2</tt>)
+      # In addition to the parent and children associations, the following
+      # instance methods are added to the class after calling
+      # <tt>acts_as_tree</tt>:
+      # * <tt>siblings</tt> - Returns all the children of the parent, excluding
+      #                       the current node (<tt>[subchild2]</tt> when called
+      #                       on <tt>subchild1</tt>)
+      # * <tt>self_and_siblings</tt> - Returns all the children of the parent,
+      #                                including the current node (<tt>[subchild1, subchild2]</tt>
+      #                                when called on <tt>subchild1</tt>)
+      # * <tt>ancestors</tt> - Returns all the ancestors of the current node
+      #                        (<tt>[child1, root]</tt> when called on <tt>subchild2</tt>)
+      # * <tt>root</tt> - Returns the root of the current node (<tt>root</tt>
+      #                   when called on <tt>subchild2</tt>)
       module ClassMethods
         # Configuration options are:
         #
-        # * <tt>foreign_key</tt> - specifies the column name to use for tracking of the tree (default: +parent_id+)
-        # * <tt>order</tt> - makes it possible to sort the children according to this SQL snippet.
-        # * <tt>counter_cache</tt> - keeps a count in a +children_count+ column if set to +true+ (default: +false+).
+        # * <tt>foreign_key</tt> - specifies the column name to use for tracking
+        #                          of the tree (default: +parent_id+)
+        # * <tt>order</tt> - makes it possible to sort the children according to
+        #                    this SQL snippet.
+        # * <tt>counter_cache</tt> - keeps a count in a +children_count+ column
+        #                            if set to +true+ (default: +false+).
         def acts_as_tree(options = {})
-          configuration = { :foreign_key => "parent_id", :order => nil, :counter_cache => nil }
+          configuration = { 
+            :foreign_key   => "parent_id",
+            :order         => nil,
+            :counter_cache => nil
+          }
           configuration.update(options) if options.is_a?(Hash)
 
-          belongs_to :parent, :class_name => name, :foreign_key => configuration[:foreign_key], :counter_cache => configuration[:counter_cache], :inverse_of => :children
-          has_many :children, :class_name => name, :foreign_key => configuration[:foreign_key], :order => configuration[:order], :dependent => :destroy, :inverse_of => :parent
+          belongs_to :parent, :class_name => name,
+            :foreign_key   => configuration[:foreign_key],
+            :counter_cache => configuration[:counter_cache],
+            :inverse_of    => :children
+
+          has_many :children, :class_name => name,
+            :foreign_key => configuration[:foreign_key],
+            :order       => configuration[:order],
+            :dependent   => :destroy,
+            :inverse_of  => :parent
 
           class_eval <<-EOV
             include ActiveRecord::Acts::Tree::InstanceMethods
 
             def self.roots
-              find(:all, :conditions => "#{configuration[:foreign_key]} IS NULL", :order => #{configuration[:order].nil? ? "nil" : %Q{"#{configuration[:order]}"}})
+              find(:all, :conditions => "#{configuration[:foreign_key]} IS NULL",
+                   :order => #{configuration[:order].nil? ? "nil" : %Q{"#{configuration[:order]}"}})
             end
 
             def self.root
-              find(:first, :conditions => "#{configuration[:foreign_key]} IS NULL", :order => #{configuration[:order].nil? ? "nil" : %Q{"#{configuration[:order]}"}})
+              find(:first, :conditions => "#{configuration[:foreign_key]} IS NULL",
+                   :order => #{configuration[:order].nil? ? "nil" : %Q{"#{configuration[:order]}"}})
             end
           EOV
         end
@@ -90,7 +116,7 @@ module ActiveRecord
         def self_and_siblings
           parent ? parent.children : self.class.roots
         end
-        
+
         # Returns children (without subchildren) and current node itself.
         #
         #   root.self_and_children # => [root, child1]
