@@ -75,6 +75,8 @@ module ActiveRecord
           class_eval <<-EOV
             include ActiveRecord::Acts::Tree::InstanceMethods
 
+            after_update :update_parents_counter_cache
+
             def self.roots
               find(:all, :conditions => "#{configuration[:foreign_key]} IS NULL",
                    :order => #{configuration[:order].nil? ? "nil" : %Q{"#{configuration[:order]}"}})
@@ -124,6 +126,15 @@ module ActiveRecord
         #   root.self_and_children # => [root, child1]
         def self_and_children
           [self] + self.children
+        end
+
+        private
+
+        def update_parents_counter_cache
+          if self.respond_to?(:children_count) && parent_id_changed?
+            self.class.decrement_counter(:children_count, parent_id_was)
+            self.class.increment_counter(:children_count, parent_id)
+          end
         end
       end
     end
