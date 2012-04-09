@@ -37,7 +37,7 @@ best to support the latest versions of ActiveRecord and Ruby.
    ignore when we pull)
 5. Send us a pull request. Bonus points for topic branches.
 
-## License
+## License (MIT)
 
 Copyright (c) 2007 David Heinemeier Hansson
 
