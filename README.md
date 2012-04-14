@@ -8,7 +8,9 @@ parent–children relationships.
 ## Example
 
     class Category < ActiveRecord::Base
-      acts_as_tree :order => "name"
+      include ActiveRecord::Acts:Tree
+
+      acts_as_tree order: "name"
     end
 
     root      = Category.create("name" => "root")
@@ -22,9 +24,18 @@ parent–children relationships.
 
 ## Compatibility
 
-acts_as_tree is a very old gem (previously a plugin). If you're using a version
-of ActiveRecord older than 3.0 please use 0.1.1. Moving forward we will do our
-best to support the latest versions of ActiveRecord and Ruby.
+We no longer support Ruby 1.8 or versions if Rails/ActiveRecord older than 3.0. If you're using a version of ActiveRecord older than 3.0 please use 0.1.1.
+
+Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
+
+## Change Log
+
+* 0.2.0 - April 9, 2012
+	*  Rails 3 Support
+* 0.1.1 - February 3, 2010
+	* Bug Fixes
+* 0.1.0 - October 9th, 2009
+	* First Gem Release
 
 ## Note on Patches/Pull Requests
 
