@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Erik Dahlstrand", "Rails Core", "Mark Turner", "Swanand Pagnis"]
   s.email       = ["erik.dahlstrand@gmail.com", "mark@amerine.net", "swanand.pagnis@gmail.com"]
   s.homepage    = "https://github.com/amerine/acts_as_tree"
-  s.summary     = %q{Provides a simple tree behaviour to active_record mdoels.}
-  s.description = %q{Specify this acts_as extension if you want to model a tree structure by providing a parent association and a children association.}
+  s.summary     = %q{Provides a simple tree behaviour to active_record models.}
+  s.description = %q{A gem that adds simple support for organizing ActiveRecord models into parent–children relationships.}
 
   s.rubyforge_project = "acts_as_tree"
 
