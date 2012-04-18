@@ -29,9 +29,12 @@ We no longer support Ruby 1.8 or versions if Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
-
+* 1.0.1 - April 18th, 2012
+	* Include the Railtie for easier loading in Rails. Will reassess the forced module inclusion in the future.
+* 1.0.0 - April 14th, 2012
+	* Official 1.0 release. Force users to include the ActiveRecord::Acts::Tree module.
 * 0.2.0 - April 9, 2012
-	*  Rails 3 Support
+	* Rails 3 Support
 * 0.1.1 - February 3, 2010
 	* Bug Fixes
 * 0.1.0 - October 9th, 2009
