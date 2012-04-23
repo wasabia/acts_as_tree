@@ -1,8 +1,9 @@
-[![Build Status](https://secure.travis-ci.org/amerine/acts_as_tree.png?branch=master)](http://travis-ci.org/amerine/acts_as_tree)
+# ActsAsTree [![Build Status](https://secure.travis-ci.org/amerine/acts_as_tree.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/amerine/acts_as_tree.png?travis)][gemnasium]
+[travis]: (http://travis-ci.org/amerine/acts_as_tree)
+[gemnasium]: (https://gemnasium.com/amerine/acts_as_tree)
 
-# ActsAsTree
 
-A gem that extends ActiveRecord to add simple support for organizing items into
+ActsAsTree extends ActiveRecord to add simple support for organizing items into
 parent–children relationships.
 
 ## Example
