@@ -12,7 +12,7 @@ task :default => :test
 require 'rdoc/task'
 RDoc::Task.new do |rdoc|
   require "acts_as_tree/version"
-  version = ActiveRecord::Acts::Tree::VERSION
+  version = ActsAsTree::VERSION
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "acts_as_tree-rails3 #{version}"

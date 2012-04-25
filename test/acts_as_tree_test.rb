@@ -38,7 +38,7 @@ def teardown_db
 end
 
 class Mixin < ActiveRecord::Base
-  include ActiveRecord::Acts::Tree
+  include ActsAsTree
 end
 
 class TreeMixin < Mixin
