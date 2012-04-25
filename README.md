@@ -30,6 +30,8 @@ We no longer support Ruby 1.8 or versions if Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 1.1.0 - April 24th, 2012
+	* Deprecate the ActiveRecord::Acts::Tree module in favor of ActsAsTree
 * 1.0.1 - April 18th, 2012
 	* Include the Railtie for easier loading in Rails. Will reassess the forced module inclusion in the future.
 * 1.0.0 - April 14th, 2012
