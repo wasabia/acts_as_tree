@@ -3,22 +3,9 @@ require 'acts_as_tree/version'
 module ActsAsTree
 
   if defined? Rails::Railtie
-    require 'rails'
-    class Railtie < Rails::Railtie
-      initializer 'acts_as_tree.insert_into_active_record' do
-        ActiveSupport.on_load :active_record do
-          ActsAsTree::Railtie.insert
-        end
-      end
-    end
-  end
-
-  class Railtie
-    def self.insert
-      if defined?(ActiveRecord)
-        ActiveRecord::Base.send(:include, ActsAsTree)
-      end
-    end
+    require 'acts_as_tree/railtie'
+  elsif defined? Rails::Initializer
+    raise "acts_as_tree 1.0 is not compatible with Rails 2.3 or older"
   end
 
   def self.included(base)
