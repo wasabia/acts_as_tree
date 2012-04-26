@@ -31,7 +31,7 @@ module ActsAsTree
   # +parent_id+.
   #
   #   class Category < ActiveRecord::Base
-  #     include ActiveRecord::Acts:Tree
+  #     include ActsAsTree
   #
   #     acts_as_tree :order => "name"
   #   end
