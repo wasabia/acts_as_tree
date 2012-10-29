@@ -82,23 +82,19 @@ module ActsAsTree
         inverse_of:  :parent
 
       class_eval <<-EOV
-            include ActsAsTree::InstanceMethods
+        include ActsAsTree::InstanceMethods
 
-            after_update :update_parents_counter_cache
+        after_update :update_parents_counter_cache
 
-            def self.roots
-              order_option = %Q{#{configuration.fetch :order, "nil"}}
+        def self.roots
+          order_option = %Q{#{configuration.fetch :order, "nil"}}
+          where(:#{configuration[:foreign_key]} => nil).order(order_option)
+        end
 
-              find(:all, conditions: "#{configuration[:foreign_key]} IS NULL",
-                         order:      order_option)
-            end
-
-            def self.root
-              order_option = %Q{#{configuration.fetch :order, "nil"}}
-
-              find(:first, conditions: "#{configuration[:foreign_key]} IS NULL",
-                           order:      order_option)
-            end
+        def self.root
+          order_option = %Q{#{configuration.fetch :order, "nil"}}
+          self.roots.first
+        end
       EOV
     end
   end
