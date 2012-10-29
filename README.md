@@ -30,6 +30,9 @@ We no longer support Ruby 1.8 or versions if Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 1.2.0 - October 29th, 2012
+	* Adding new `self_with_ancestors` accessor -- fbuenemann
+	* `roots` is now a scope.
 * 1.1.0 - April 24th, 2012
 	* Deprecate the ActiveRecord::Acts::Tree module in favor of ActsAsTree
 * 1.0.1 - April 18th, 2012
