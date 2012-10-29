@@ -1,6 +1,5 @@
-# ActsAsTree [![Build Status](https://secure.travis-ci.org/amerine/acts_as_tree.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/amerine/acts_as_tree.png?travis)][gemnasium]
+# ActsAsTree [![Build Status](https://secure.travis-ci.org/amerine/acts_as_tree.png?branch=master)][travis]
 [travis]: (http://travis-ci.org/amerine/acts_as_tree)
-[gemnasium]: (https://gemnasium.com/amerine/acts_as_tree)
 
 
 ActsAsTree extends ActiveRecord to add simple support for organizing items into
