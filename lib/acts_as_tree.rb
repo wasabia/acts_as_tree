@@ -75,8 +75,8 @@ module ActsAsTree
         counter_cache: configuration[:counter_cache],
         inverse_of:    :children
 
-      if Rails.version.to_i == 4
-        has_many :children, -> { order configuration[:order] },
+      if ActiveRecord::VERSION::MAJOR > 3
+        has_many :children, lambda { order configuration[:order] },
           class_name:  name,
           foreign_key: configuration[:foreign_key],
           dependent:   configuration[:dependent],
