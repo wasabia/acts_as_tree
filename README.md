@@ -31,6 +31,9 @@ We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 1.3.0 - March 29th, 2013
+  * Rails 4.0 Support! -- mischa78
+  * Readme Fixes -- mischa78 & seanhussey
 * 1.2.0 - October 29th, 2012
 	* Adding new `self_with_ancestors` accessor -- fbuenemann
 	* `roots` is now a scope.
