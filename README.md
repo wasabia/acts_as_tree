@@ -8,18 +8,10 @@ parent–children relationships.
 ## Example
 
 ```ruby
-# Rails 3
 class Category < ActiveRecord::Base
   include ActsAsTree
 
   acts_as_tree order: "name"
-end
-
-# Rails 4
-class Category < ActiveRecord::Base
-  include ActsAsTree
-
-  acts_as_tree order: lambda { order "name" }
 end
 
 root      = Category.create("name" => "root")
