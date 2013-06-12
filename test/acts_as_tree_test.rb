@@ -189,6 +189,18 @@ class TreeTest < Test::Unit::TestCase
     assert_equal false, @child1_child_child.root?
     assert_equal false, @root_child2.root?
   end
+
+  def test_is_leaf
+    assert_equal true, @root2.leaf?
+    assert_equal true, @root3.leaf?
+    assert_equal true, @child1_child_child.leaf?
+    assert_equal true, @root_child2.leaf?
+
+    assert_equal false, @root1.leaf?
+    assert_equal false, @root_child1.leaf?
+    assert_equal false, @child1_child.leaf?
+  end
+
 end
 
 class TreeTestWithEagerLoading < Test::Unit::TestCase
