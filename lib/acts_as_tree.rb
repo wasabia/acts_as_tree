@@ -152,6 +152,14 @@ module ActsAsTree
       [self] + self.ancestors
     end
 
+    # Returns true if node has no parent, false otherwise
+    #
+    #   subchild1.root? # => false
+    #   root.root?      # => true
+    def root?
+      parent.nil?
+    end
+
     private
 
     def update_parents_counter_cache

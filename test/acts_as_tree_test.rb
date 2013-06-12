@@ -179,6 +179,16 @@ class TreeTest < Test::Unit::TestCase
     assert_nil root4_child.reload.parent_id
   end
 
+  def test_is_root
+    assert_equal true, @root1.root?
+    assert_equal true, @root2.root?
+    assert_equal true, @root3.root?
+
+    assert_equal false, @root_child1.root?
+    assert_equal false, @child1_child.root?
+    assert_equal false, @child1_child_child.root?
+    assert_equal false, @root_child2.root?
+  end
 end
 
 class TreeTestWithEagerLoading < Test::Unit::TestCase
