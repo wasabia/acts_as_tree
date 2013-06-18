@@ -91,6 +91,7 @@ module ActsAsTree
 
       class_eval <<-EOV
         include ActsAsTree::InstanceMethods
+        extend ActsAsTree::ExtendClassMethods
 
         after_update :update_parents_counter_cache
 
@@ -106,6 +107,9 @@ module ActsAsTree
       EOV
     end
 
+  end
+
+  module ExtendClassMethods
     # show records in a tree view
     # Example:
     # root
@@ -116,7 +120,7 @@ module ActsAsTree
     #       |_ subchild3
     #       |_ subchild4
     #
-    def self.tree_view(label_method = :to_s,  node = nil, level = -1)
+    def tree_view(label_method = :to_s,  node = nil, level = -1)
       if node.nil?
         puts "root"
         nodes = roots
