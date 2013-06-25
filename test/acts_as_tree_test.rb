@@ -203,6 +203,7 @@ class TreeTest < Test::Unit::TestCase
 
   def test_tree_view
     assert_equal false, Mixin.respond_to?(:tree_view)
+    Mixin.extend ActsAsTree::Presentation
     assert_equal true,  TreeMixin.respond_to?(:tree_view)
 
     tree_view_outputs = <<-END.gsub(/^ {6}/, '')

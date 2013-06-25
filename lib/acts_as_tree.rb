@@ -91,7 +91,6 @@ module ActsAsTree
 
       class_eval <<-EOV
         include ActsAsTree::InstanceMethods
-        extend ActsAsTree::ExtendClassMethods
 
         after_update :update_parents_counter_cache
 
@@ -109,7 +108,7 @@ module ActsAsTree
 
   end
 
-  module ExtendClassMethods
+  module Presentation
     # show records in a tree view
     # Example:
     # root
