@@ -2,8 +2,7 @@
 [travis]: (http://travis-ci.org/amerine/acts_as_tree)
 
 
-ActsAsTree extends ActiveRecord to add simple support for organizing items into
-parent–children relationships.
+ActsAsTree extends ActiveRecord to add simple support for organizing items into parent–children relationships.
 
 ## Example
 
@@ -24,6 +23,27 @@ root.children # => [child1]
 root.children.first.children.first # => subchild1
 ```
 
+We also have a convenient `Presentation` module you can mixin if you want a little visual representation of the tree strucuture. Example:
+
+```ruby
+class Category < ActiveRecord::Base
+  include ActsAsTree
+  extend ActsAsTree::Presentation
+
+  acts_as_tree order: "name"
+end
+
+> Category.tree_view(:name)
+root
+ |_ child1
+ |    |_ subchild1
+ |    |_ subchild2
+ |_ child2
+      |_ subchild3
+      |_ subchild4
+=> nil
+```
+
 ## Compatibility
 
 We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. If you're using a version of ActiveRecord older than 3.0 please use 0.1.1.
@@ -31,9 +51,12 @@ We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 1.4.0 - June 25th, 2013
+	* `Presentation#tree_view` -- rainchen
+	* `root?` && `leaf?` methods. -- xuanxu
 * 1.3.0 - March 29th, 2013
-  * Rails 4.0 Support! -- mischa78
-  * Readme Fixes -- mischa78 & seanhussey
+	* Rails 4.0 Support! -- mischa78
+	* Readme Fixes -- mischa78 & seanhussey
 * 1.2.0 - October 29th, 2012
 	* Adding new `self_with_ancestors` accessor -- fbuenemann
 	* `roots` is now a scope.
