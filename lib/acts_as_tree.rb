@@ -100,7 +100,6 @@ module ActsAsTree
         end
 
         def self.root
-          order_option = %Q{#{configuration.fetch :order, "nil"}}
           self.roots.first
         end
       EOV
