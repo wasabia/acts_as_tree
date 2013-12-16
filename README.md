@@ -51,6 +51,9 @@ We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 1.5.0 - December 16th, 2013
+	* `Added new descendants method` -- adamkleingit
+	* Fixed warning message -- akicho8
 * 1.4.0 - June 25th, 2013
 	* `Presentation#tree_view` -- rainchen
 	* `root?` && `leaf?` methods. -- xuanxu
