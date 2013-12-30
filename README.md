@@ -86,6 +86,9 @@ Moving forward we will do our best to support the latest versions of ActiveRecor
    your own version, that is fine but bump version in a commit by itself so we can
    ignore when we pull)
 5. Send us a pull request. Bonus points for topic branches.
+6. All contributors to this project, after their first accepted patch, are given push
+   access to the repository and are welcome as full contributors to ActsAsTree. All
+   we ask is that all changes go through CI and a Pull Request before merging.
 
 ## License (MIT)
 
