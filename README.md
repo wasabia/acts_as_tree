@@ -8,8 +8,6 @@ ActsAsTree extends ActiveRecord to add simple support for organizing items into 
 
 ```ruby
 class Category < ActiveRecord::Base
-  include ActsAsTree
-
   acts_as_tree order: "name"
 end
 
@@ -27,7 +25,6 @@ We also have a convenient `Presentation` module you can mixin if you want a litt
 
 ```ruby
 class Category < ActiveRecord::Base
-  include ActsAsTree
   extend ActsAsTree::Presentation
 
   acts_as_tree order: "name"
