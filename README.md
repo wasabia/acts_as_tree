@@ -48,6 +48,8 @@ We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 1.5.1 - March 28, 2014
+	* Fixing descendants modification bug. See #20 -- amerine, tmuerell
 * 1.5.0 - December 16th, 2013
 	* `Added new descendants method` -- adamkleingit
 	* Fixed warning message -- akicho8
