@@ -67,6 +67,7 @@ class TreeTest < MiniTest::Unit::TestCase
 
   def setup
     setup_db
+
     @root1              = TreeMixin.create!
     @root_child1        = TreeMixin.create! parent_id: @root1.id
     @child1_child       = TreeMixin.create! parent_id: @root_child1.id
@@ -137,6 +138,14 @@ class TreeTest < MiniTest::Unit::TestCase
 
   def test_roots
     assert_equal [@root1, @root2, @root3], TreeMixin.roots
+  end
+
+  def test_leaves
+    assert_equal [@child1_child_child, @root_child2, @root2, @root3], TreeMixin.leaves
+  end
+
+  def test_default_tree_order
+    assert_equal [@root1, @root_child1, @child1_child, @child1_child_child, @root_child2, @root2, @root3], TreeMixin.default_tree_order
   end
 
   def test_siblings
@@ -408,4 +417,7 @@ class TreeTestWithCounterCache < MiniTest::Unit::TestCase
     assert_equal 0, @child1.reload.children_count
   end
 
+  def test_leaves
+    assert_equal [@child1_child1, @child2], TreeMixinWithCounterCache.leaves
+  end
 end

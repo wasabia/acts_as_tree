@@ -94,15 +94,35 @@ module ActsAsTree
 
         after_update :update_parents_counter_cache
 
-        def self.roots
+        def self.default_tree_order
           order_option = %Q{#{configuration.fetch :order, "nil"}}
-          where(:#{configuration[:foreign_key]} => nil).order(order_option)
+          order(order_option)
         end
 
         def self.root
           self.roots.first
         end
+
+        def self.roots
+          where(:#{configuration[:foreign_key]} => nil).default_tree_order
+        end
       EOV
+
+      if configuration[:counter_cache]
+        class_eval <<-EOV
+          def self.leaves
+            where(:children_count => 0).default_tree_order
+          end
+        EOV
+      else
+        # Fallback to less efficent ways to find leaves.
+        class_eval <<-EOV
+          def self.leaves
+            internal_ids = select(:#{configuration[:foreign_key]}).where(arel_table[:#{configuration[:foreign_key]}].not_eq(nil))
+            where("id NOT IN (\#{internal_ids.to_sql})").default_tree_order
+          end
+        EOV
+      end
     end
 
   end
