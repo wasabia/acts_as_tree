@@ -48,10 +48,12 @@ We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 1.6.0 - April 21, 2014
+	* Added new `leaves` method. See #23 -- MichalPokorny
 * 1.5.1 - March 28, 2014
 	* Fixing descendants modification bug. See #20 -- amerine, tmuerell
 * 1.5.0 - December 16th, 2013
-	* `Added new descendants method` -- adamkleingit
+	* Added new `descendants` method -- adamkleingit
 	* Fixed warning message -- akicho8
 * 1.4.0 - June 25th, 2013
 	* `Presentation#tree_view` -- rainchen
