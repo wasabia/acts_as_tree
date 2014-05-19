@@ -2,7 +2,7 @@
 [travis]: (http://travis-ci.org/amerine/acts_as_tree)
 
 
-ActsAsTree extends ActiveRecord to add simple support for organizing items into parent–children relationships.
+ActsAsTree extends ActiveRecord to add simple support for organizing items into parent–children relationships. By default, ActsAsTree expects a foreign key column called `parent_id`.
 
 ## Example
 
