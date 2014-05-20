@@ -59,7 +59,8 @@ module ActsAsTree
     # * <tt>order</tt> - makes it possible to sort the children according to
     #                    this SQL snippet.
     # * <tt>counter_cache</tt> - keeps a count in a +children_count+ column
-    #                            if set to +true+ (default: +false+).
+    #                            if set to +true+ (default: +false+). Specify
+    #                            a custom column by passing a symbol or string.
     def acts_as_tree(options = {})
       configuration = {
         foreign_key:   "parent_id",
@@ -69,6 +70,10 @@ module ActsAsTree
       }
 
       configuration.update(options) if options.is_a?(Hash)
+
+      if configuration[:counter_cache] == true
+        configuration[:counter_cache] = :children_count
+      end
 
       belongs_to :parent, class_name:    name,
         foreign_key:   configuration[:foreign_key],
@@ -92,8 +97,6 @@ module ActsAsTree
       class_eval <<-EOV
         include ActsAsTree::InstanceMethods
 
-        after_update :update_parents_counter_cache
-
         def self.default_tree_order
           order_option = %Q{#{configuration.fetch :order, "nil"}}
           order(order_option)
@@ -109,11 +112,16 @@ module ActsAsTree
       EOV
 
       if configuration[:counter_cache]
-        class_eval <<-EOV
-          def self.leaves
-            where(:children_count => 0).default_tree_order
-          end
-        EOV
+        after_update :update_parents_counter_cache
+
+        def children_counter_cache_column
+          reflect_on_association(:parent).counter_cache_column
+        end
+
+        def leaves
+          where(children_counter_cache_column => 0).default_tree_order
+        end
+
       else
         # Fallback to less efficent ways to find leaves.
         class_eval <<-EOV
@@ -238,9 +246,11 @@ module ActsAsTree
     private
 
     def update_parents_counter_cache
-      if self.respond_to?(:children_count) && parent_id_changed?
-        self.class.decrement_counter(:children_count, parent_id_was)
-        self.class.increment_counter(:children_count, parent_id)
+      counter_cache_column = self.class.children_counter_cache_column
+
+      if parent_id_changed?
+        self.class.decrement_counter(counter_cache_column, parent_id_was)
+        self.class.increment_counter(counter_cache_column, parent_id)
       end
     end
   end
