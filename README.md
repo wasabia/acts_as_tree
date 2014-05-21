@@ -91,6 +91,23 @@ Moving forward we will do our best to support the latest versions of ActiveRecor
    access to the repository and are welcome as full contributors to ActsAsTree. All
    we ask is that all changes go through CI and a Pull Request before merging.
 
+## Releasing new versions
+
+1. We follow Semver. So if you're shipping interface breaking changes then bump
+   the major version. We don't care if we ship version 1101.1.1, as long as
+   people know that 1101.1.1 has breaking differences from 1100.0. If you're
+   adding new features, but not changing existing functionality bump the minor
+   version, if you're shipping a bugfix, just bump the patch.
+2. Following the above rules, change the version found in lib/acts_as_tree/version.rb.
+3. Make sure the Change log in the README includes a brief summary of the versions
+   changes, with credit to the contributors.
+4. Commit these changes in one "release-prep" commit (on the master branch).
+5. Push that commit up to the repo.
+6. Run `rake release`
+   This will create and push a tag to Github, then generate a gem and push it to
+   Rubygems.
+7. Profit.
+
 ## License (MIT)
 
 Copyright (c) 2007 David Heinemeier Hansson
