@@ -240,7 +240,7 @@ module ActsAsTree
     #   subchild1.leaf? # => true
     #   child1.leaf?    # => false
     def leaf?
-      children.count == 0
+      children.size.zero?
     end
 
     private

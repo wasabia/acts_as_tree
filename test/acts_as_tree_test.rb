@@ -4,31 +4,57 @@ require 'active_record'
 require 'acts_as_tree'
 
 class MiniTest::Unit::TestCase
-  def assert_queries(num = 1)
-    $query_count = 0
-    yield
+  def assert_queries(num = 1, &block)
+    query_count, result = count_queries(&block)
+    result
   ensure
-    assert_equal num, $query_count, "#{$query_count} instead of #{num} queries were executed."
+    assert_equal num, query_count, "#{query_count} instead of #{num} queries were executed."
   end
 
   def assert_no_queries(&block)
     assert_queries(0, &block)
   end
+
+  def count_queries &block
+    count = 0
+
+    counter_f = ->(name, started, finished, unique_id, payload) {
+      unless %w[ CACHE SCHEMA ].include? payload[:name]
+        count += 1
+      end
+    }
+
+    result = ActiveSupport::Notifications.subscribed(counter_f, "sql.active_record", &block)
+
+    [count, result]
+  end
+
+  def capture_stdout(&block)
+    real_stdout = $stdout
+
+    $stdout = StringIO.new
+    yield
+    $stdout.string
+  ensure
+    $stdout = real_stdout
+  end
 end
 
 ActiveRecord::Base.establish_connection adapter: "sqlite3", database: ":memory:"
 
-# AR keeps printing annoying schema statements
-$stdout = StringIO.new
-
-def setup_db
-  ActiveRecord::Base.logger
-  ActiveRecord::Schema.define(version: 1) do
-    create_table :mixins do |t|
-      t.column :type, :string
-      t.column :parent_id, :integer
-      t.column :children_count, :integer, default: 0
+def setup_db(counter_cache = false)
+  # AR keeps printing annoying schema statements
+  capture_stdout do
+    ActiveRecord::Base.logger
+    ActiveRecord::Schema.define(version: 1) do
+      create_table :mixins do |t|
+        t.column :type, :string
+        t.column :parent_id, :integer
+        t.column(:children_count, :integer, default: 0) if counter_cache
+      end
     end
+
+    Mixin.reset_column_information
   end
 end
 
@@ -236,9 +262,7 @@ class TreeTest < MiniTest::Unit::TestCase
        |_ 6
        |_ 7
     END
-    $stdout.reopen # reinitializes $stdout
-    TreeMixin.tree_view(:id)
-    assert_equal tree_view_outputs, $stdout.string
+    assert_equal tree_view_outputs, capture_stdout { TreeMixin.tree_view(:id) }
   end
 end
 
@@ -322,9 +346,9 @@ class TreeTestWithEagerLoading < MiniTest::Unit::TestCase
     assert_equal [@root1, @root2, @root3], roots
 
     assert_no_queries do
-      assert_equal 2, roots[0].children.count
-      assert_equal 0, roots[1].children.count
-      assert_equal 0, roots[2].children.count
+      assert_equal 2, roots[0].children.size
+      assert_equal 0, roots[1].children.size
+      assert_equal 0, roots[2].children.size
     end
   end
 
@@ -395,11 +419,14 @@ end
 class TreeTestWithCounterCache < MiniTest::Unit::TestCase
   def setup
     teardown_db
-    setup_db
+    setup_db(true)
+
     @root          = TreeMixinWithCounterCache.create!
     @child1        = TreeMixinWithCounterCache.create! parent_id: @root.id
     @child1_child1 = TreeMixinWithCounterCache.create! parent_id: @child1.id
     @child2        = TreeMixinWithCounterCache.create! parent_id: @root.id
+
+    [@root, @child1, @child1_child1, @child2].map(&:reload)
   end
 
   def teardown
@@ -407,8 +434,8 @@ class TreeTestWithCounterCache < MiniTest::Unit::TestCase
   end
 
   def test_counter_cache
-    assert_equal 2, @root.reload.children_count
-    assert_equal 1, @child1.reload.children_count
+    assert_equal 2, @root.children_count
+    assert_equal 1, @child1.children_count
   end
 
   def test_update_parents_counter_cache
@@ -419,5 +446,13 @@ class TreeTestWithCounterCache < MiniTest::Unit::TestCase
 
   def test_leaves
     assert_equal [@child1_child1, @child2], TreeMixinWithCounterCache.leaves
+
+    assert !@root.leaf?
+    assert @child2.leaf?
+  end
+
+  def test_counter_cache_being_used
+    assert_no_queries { @root.leaf? }
+    assert_no_queries { @child2.leaf? }
   end
 end
