@@ -1,6 +1,6 @@
-# ActsAsTree [![Build Status](https://secure.travis-ci.org/amerine/acts_as_tree.png?branch=master)][travis]
-[travis]: (http://travis-ci.org/amerine/acts_as_tree)
-
+# ActsAsTree
+[![Build Status](https://secure.travis-ci.org/amerine/acts_as_tree.svg?branch=master)](http://travis-ci.org/amerine/acts_as_tree)
+[![Gem Version](https://badge.fury.io/rb/acts_as_tree.svg)](http://badge.fury.io/rb/acts\_as\_tree)
 
 ActsAsTree extends ActiveRecord to add simple support for organizing items into parent–children relationships. By default, ActsAsTree expects a foreign key column called `parent_id`.
 
