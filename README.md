@@ -48,6 +48,10 @@ We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 1.6.1 - April 21, 2014
+	* Readme Immprovements, see #26 -- schlick
+	* Improvements and Fixes for counter cache (fix counter\_cache: true). See #24, #25 -- dv
+	* Cleanup and fix tests, see #24.
 * 1.6.0 - April 21, 2014
 	* Added new `leaves` method. See #23 -- MichalPokorny
 * 1.5.1 - March 28, 2014
@@ -62,7 +66,7 @@ Moving forward we will do our best to support the latest versions of ActiveRecor
 	* Rails 4.0 Support! -- mischa78
 	* Readme Fixes -- mischa78 & seanhussey
 * 1.2.0 - October 29th, 2012
-	* Adding new `self_with_ancestors` accessor -- fbuenemann
+	* Adding new `self_with_ancestors` accessor -- felixbuenemann
 	* `roots` is now a scope.
 * 1.1.0 - April 24th, 2012
 	* Deprecate the ActiveRecord::Acts::Tree module in favor of ActsAsTree
