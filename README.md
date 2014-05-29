@@ -1,5 +1,5 @@
 # ActsAsTree
-[![Build Status](https://secure.travis-ci.org/amerine/acts_as_tree.svg?branch=master)](http://travis-ci.org/amerine/acts_as_tree)
+[![Build Status](https://secure.travis-ci.org/amerine/acts_as_tree.svg?branch=master)](http://travis-ci.org/amerine/acts\_as\_tree)
 [![Gem Version](https://badge.fury.io/rb/acts_as_tree.svg)](http://badge.fury.io/rb/acts\_as\_tree)
 
 ActsAsTree extends ActiveRecord to add simple support for organizing items into parent–children relationships. By default, ActsAsTree expects a foreign key column called `parent_id`.
@@ -49,7 +49,7 @@ Moving forward we will do our best to support the latest versions of ActiveRecor
 
 ## Change Log
 * 1.6.1 - April 21, 2014
-	* Readme Immprovements, see #26 -- schlick
+	* Readme Improvements, see #26 -- schlick
 	* Improvements and Fixes for counter cache (fix counter\_cache: true). See #24, #25 -- dv
 	* Cleanup and fix tests, see #24.
 * 1.6.0 - April 21, 2014
