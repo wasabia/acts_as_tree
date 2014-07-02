@@ -21,11 +21,11 @@ root.children # => [child1]
 root.children.first.children.first # => subchild1
 ```
 
-We also have a convenient `Presentation` module you can mixin if you want a little visual representation of the tree strucuture. Example:
+We also have a convenient `TreeView` module you can mixin if you want a little visual representation of the tree strucuture. Example:
 
 ```ruby
 class Category < ActiveRecord::Base
-  extend ActsAsTree::Presentation
+  extend ActsAsTree::TreeView
 
   acts_as_tree order: "name"
 end

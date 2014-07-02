@@ -135,7 +135,7 @@ module ActsAsTree
 
   end
 
-  module Presentation
+  module TreeView
     # show records in a tree view
     # Example:
     # root

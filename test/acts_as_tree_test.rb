@@ -249,7 +249,7 @@ class TreeTest < MiniTest::Unit::TestCase
 
   def test_tree_view
     assert_equal false, Mixin.respond_to?(:tree_view)
-    Mixin.extend ActsAsTree::Presentation
+    Mixin.extend ActsAsTree::TreeView
     assert_equal true,  TreeMixin.respond_to?(:tree_view)
 
     tree_view_outputs = <<-END.gsub(/^ {6}/, '')
