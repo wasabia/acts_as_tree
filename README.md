@@ -48,7 +48,9 @@ We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
-* 1.6.1 - April 21, 2014
+* 2.0.0 - July 3, 2014
+	* Renamed Presentation module to TreeView, see #27, #28 -- felixbuenemann
+* 1.6.1 - May 29, 2014
 	* Readme Improvements, see #26 -- schlick
 	* Improvements and Fixes for counter cache (fix counter\_cache: true). See #24, #25 -- dv
 	* Cleanup and fix tests, see #24.
@@ -56,29 +58,29 @@ Moving forward we will do our best to support the latest versions of ActiveRecor
 	* Added new `leaves` method. See #23 -- MichalPokorny
 * 1.5.1 - March 28, 2014
 	* Fixing descendants modification bug. See #20 -- amerine, tmuerell
-* 1.5.0 - December 16th, 2013
+* 1.5.0 - December 16, 2013
 	* Added new `descendants` method -- adamkleingit
 	* Fixed warning message -- akicho8
-* 1.4.0 - June 25th, 2013
+* 1.4.0 - June 25, 2013
 	* `Presentation#tree_view` -- rainchen
 	* `root?` && `leaf?` methods. -- xuanxu
-* 1.3.0 - March 29th, 2013
+* 1.3.0 - March 29, 2013
 	* Rails 4.0 Support! -- mischa78
 	* Readme Fixes -- mischa78 & seanhussey
-* 1.2.0 - October 29th, 2012
+* 1.2.0 - October 29, 2012
 	* Adding new `self_with_ancestors` accessor -- felixbuenemann
 	* `roots` is now a scope.
-* 1.1.0 - April 24th, 2012
+* 1.1.0 - April 24, 2012
 	* Deprecate the ActiveRecord::Acts::Tree module in favor of ActsAsTree
-* 1.0.1 - April 18th, 2012
+* 1.0.1 - April 18, 2012
 	* Include the Railtie for easier loading in Rails. Will reassess the forced module inclusion in the future.
-* 1.0.0 - April 14th, 2012
+* 1.0.0 - April 14, 2012
 	* Official 1.0 release. Force users to include the ActiveRecord::Acts::Tree module.
 * 0.2.0 - April 9, 2012
 	* Rails 3 Support
 * 0.1.1 - February 3, 2010
 	* Bug Fixes
-* 0.1.0 - October 9th, 2009
+* 0.1.0 - October 9, 2009
 	* First Gem Release
 
 ## Note on Patches/Pull Requests
