@@ -27,7 +27,7 @@ We also have a convenient `TreeView` module you can mixin if you want a little v
 class Category < ActiveRecord::Base
   extend ActsAsTree::TreeView
 
-  acts_as_tree order: "name"
+  acts_as_tree order: 'name'
 end
 
 > Category.tree_view(:name)
@@ -47,14 +47,14 @@ And there's a `TreeWalker` module (simply walking the tree and calling a given b
 class Page < ActiveRecord::Base
   extend ActsAsTree::TreeWalker
 
-  acts_as_tree order: "rank"
+  acts_as_tree order: 'rank'
 end
 ```
 
 And in your view:
 
 ```erb
-<% Page.walk_tree(:indent => '&mdash;') do |page, indent|
+<% Page.walk_tree(:indent => '&mdash;') do |page, indent| %>
   <%= link_to "#{indent}#{page.name}", page_path(@page) %><br />
 <% end %>
 ```
