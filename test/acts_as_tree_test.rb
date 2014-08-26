@@ -264,6 +264,23 @@ class TreeTest < MiniTest::Unit::TestCase
     END
     assert_equal tree_view_outputs, capture_stdout { TreeMixin.tree_view(:id) }
   end
+
+  def test_tree_walker
+    assert_equal false, Mixin.respond_to?(:walk_tree)
+    Mixin.extend ActsAsTree::TreeWalker
+    assert_equal true,  TreeMixin.respond_to?(:walk_tree)
+
+    walk_tree_output = <<-END.gsub(/^\s+/, '')
+      1
+      -2
+      --3
+      ---4
+      -5
+      6
+      7
+      END
+    assert_equal walk_tree_output, capture_stdout { TreeMixin.walk_tree{|elem, indent| puts "#{indent}#{elem.id}"} }
+  end
 end
 
 class TestDeepDescendantsPerformance < MiniTest::Unit::TestCase

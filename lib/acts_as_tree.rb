@@ -166,6 +166,27 @@ module ActsAsTree
 
   end
 
+  module TreeWalker
+    # call block with each element in the tree
+    # Example of acts_as_tree model Page (ERB view):
+    # <% Page.walk_tree(:indent => '&mdash;') do |page, indent|
+    #   <%= link_to "#{indent}#{page.name}", page_path(@page) %><br />
+    # <% end %>
+    def walk_tree(_options = {}, indent = '', node = nil, &block)
+      options = {:indent => '-', :where_statement => {}}.update(_options)
+      if node.nil?
+        roots.each do |root_node|
+          walk_tree(options, indent, root_node, &block)
+        end
+      else
+        block.call(node, indent)
+        node.children.where(options[:where_statement]).each do |child|
+          walk_tree(options, "#{indent}#{options[:indent]}", child, &block)
+        end
+      end
+    end
+  end
+
   module InstanceMethods
     # Returns list of ancestors, starting from parent until root.
     #
