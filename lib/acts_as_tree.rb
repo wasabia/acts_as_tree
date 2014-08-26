@@ -170,7 +170,7 @@ module ActsAsTree
     # call block with each element in the tree
     # Example of acts_as_tree model Page (ERB view):
     # <% Page.walk_tree(:indent => '&mdash;') do |page, indent|
-    #   <%= link_to "#{indent}#{page.name}", page_path(@page) %><br />
+    #   <%= link_to (indent.html_safe << page.name), page_path(@page) %><br />
     # <% end %>
     def walk_tree(_options = {}, indent = '', node = nil, &block)
       options = {:indent => '-', :where_statement => {}}.update(_options)

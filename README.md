@@ -41,6 +41,24 @@ root
 => nil
 ```
 
+And there's a `TreeWalker` module (simply walking the tree and calling a given block on each node) as well. Example:
+
+```ruby
+class Page < ActiveRecord::Base
+  extend ActsAsTree::TreeWalker
+
+  acts_as_tree order: "rank"
+end
+```
+
+And in your view:
+
+```erb
+<% Page.walk_tree(:indent => '&mdash;') do |page, indent|
+  <%= link_to "#{indent}#{page.name}", page_path(@page) %><br />
+<% end %>
+```
+
 ## Compatibility
 
 We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. If you're using a version of ActiveRecord older than 3.0 please use 0.1.1.
