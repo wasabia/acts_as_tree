@@ -266,11 +266,11 @@ class TreeTest < MiniTest::Unit::TestCase
   end
 
   def test_tree_walker
-    assert_equal false, TreeMixin.respond_to?(:walk_tree)
-    TreeMixin.extend ActsAsTree::TreeWalker
+    assert_equal false, Mixin.respond_to?(:walk_tree)
+    Mixin.extend ActsAsTree::TreeWalker
     assert_equal true,  TreeMixin.respond_to?(:walk_tree)
 
-    walk_tree_dfs_output = <<-END.gsub(/^\s+/, '')
+    walk_tree_output = <<-END.gsub(/^\s+/, '')
       1
       -2
       --3
@@ -279,18 +279,7 @@ class TreeTest < MiniTest::Unit::TestCase
       6
       7
       END
-    assert_equal walk_tree_dfs_output, capture_stdout { TreeMixin.walk_tree{|elem, level| puts "#{'-'*level}#{elem.id}"} }
-
-    walk_tree_bfs_output = <<-END.gsub(/^\s+/, '')
-      1
-      6
-      7
-      -2
-      -5
-      --3
-      ---4
-      END
-    assert_equal walk_tree_bfs_output, capture_stdout { TreeMixin.walk_tree(:algorithm => :bfs){|elem, level| puts "#{'-'*level}#{elem.id}"} }
+    assert_equal walk_tree_output, capture_stdout { TreeMixin.walk_tree{|elem, indent| puts "#{indent}#{elem.id}"} }
   end
 end
 
