@@ -41,7 +41,7 @@ root
 => nil
 ```
 
-And there's a `TreeWalker` module (simply walking the tree and calling a given block on each node) as well. Example:
+And there's a `TreeWalker` module (traversing the tree using depth-first search (default) or breadth-first search) as well. Example given the Model `Page` as
 
 ```ruby
 class Page < ActiveRecord::Base
@@ -51,11 +51,11 @@ class Page < ActiveRecord::Base
 end
 ```
 
-And in your view:
+In your view you could traverse the tree using
 
 ```erb
-<% Page.walk_tree(:indent => '&mdash;') do |page, indent| %>
-  <%= link_to "#{indent}#{page.name}", page_path(@page) %><br />
+<% Page.walk_tree do |page, level| %>
+  <%= link_to "#{'-'*level}#{page.name}", page_path(page) %><br />
 <% end %>
 ```
 

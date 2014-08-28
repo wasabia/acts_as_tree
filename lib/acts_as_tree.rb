@@ -167,21 +167,45 @@ module ActsAsTree
   end
 
   module TreeWalker
-    # call block with each element in the tree
-    # Example of acts_as_tree model Page (ERB view):
-    # <% Page.walk_tree(:indent => '&mdash;') do |page, indent| %>
-    #   <%= link_to (indent.html_safe << page.name), page_path(@page) %><br />
+    # Traverse the tree and call a block with the current node and current
+    # depth-level.
+    #
+    # options:
+    #   algorithm:
+    #     :dfs for depth-first search (default)
+    #     :bfs for breadth-first search
+    #   where: AR where statement to filter certain nodes
+    #
+    # The given block sets two parameters:
+    #   first: The current node
+    #   second: The current depth-level within the tree
+    #
+    # Example of acts_as_tree for model Page (ERB view):
+    # <% Page.walk_tree do |page, level| %>
+    #   <%= link_to "#{' '*level}#{page.name}", page_path(page) %><br />
     # <% end %>
-    def walk_tree(_options = {}, indent = '', node = nil, &block)
-      options = {:indent => '-', :where_statement => {}}.update(_options)
-      if node.nil?
-        roots.each do |root_node|
-          walk_tree(options, indent, root_node, &block)
+    #
+    def walk_tree(_options = {}, level = 0, node = nil, &block)
+      options = {:algorithm => :dfs, :where => {}}.update(_options)
+      case options[:algorithm]
+      when :bfs
+        nodes = (node.nil? ? roots : node.children).where(options[:where])
+        nodes.each do |child|
+          block.call child, level
+        end
+        nodes.each do |child|
+          walk_tree options, level + 1, child, &block
         end
       else
-        block.call(node, indent)
-        node.children.where(options[:where_statement]).each do |child|
-          walk_tree(options, "#{indent}#{options[:indent]}", child, &block)
+        if node.nil?
+          roots.where(options[:where]).each do |root_node|
+            walk_tree options, level, root_node, &block
+          end
+        else
+          block.call node, level
+          node.children.where(options[:where]).each do |child|
+            walk_tree options, level + 1, child, &block
+          end
         end
       end
     end
