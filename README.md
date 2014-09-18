@@ -27,7 +27,7 @@ We also have a convenient `TreeView` module you can mixin if you want a little v
 class Category < ActiveRecord::Base
   extend ActsAsTree::TreeView
 
-  acts_as_tree order: "name"
+  acts_as_tree order: 'name'
 end
 
 > Category.tree_view(:name)
@@ -39,6 +39,24 @@ root
       |_ subchild3
       |_ subchild4
 => nil
+```
+
+And there's a `TreeWalker` module (traversing the tree using depth-first search (default) or breadth-first search) as well. Example given the Model `Page` as
+
+```ruby
+class Page < ActiveRecord::Base
+  extend ActsAsTree::TreeWalker
+
+  acts_as_tree order: 'rank'
+end
+```
+
+In your view you could traverse the tree using
+
+```erb
+<% Page.walk_tree do |page, level| %>
+  <%= link_to "#{'-'*level}#{page.name}", page_path(page) %><br />
+<% end %>
 ```
 
 ## Compatibility

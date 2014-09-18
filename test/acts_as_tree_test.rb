@@ -264,6 +264,34 @@ class TreeTest < MiniTest::Unit::TestCase
     END
     assert_equal tree_view_outputs, capture_stdout { TreeMixin.tree_view(:id) }
   end
+
+  def test_tree_walker
+    assert_equal false, TreeMixin.respond_to?(:walk_tree)
+    TreeMixin.extend ActsAsTree::TreeWalker
+    assert_equal true,  TreeMixin.respond_to?(:walk_tree)
+
+    walk_tree_dfs_output = <<-END.gsub(/^\s+/, '')
+      1
+      -2
+      --3
+      ---4
+      -5
+      6
+      7
+      END
+    assert_equal walk_tree_dfs_output, capture_stdout { TreeMixin.walk_tree{|elem, level| puts "#{'-'*level}#{elem.id}"} }
+
+    walk_tree_bfs_output = <<-END.gsub(/^\s+/, '')
+      1
+      6
+      7
+      -2
+      -5
+      --3
+      ---4
+      END
+    assert_equal walk_tree_bfs_output, capture_stdout { TreeMixin.walk_tree(:algorithm => :bfs){|elem, level| puts "#{'-'*level}#{elem.id}"} }
+  end
 end
 
 class TestDeepDescendantsPerformance < MiniTest::Unit::TestCase
