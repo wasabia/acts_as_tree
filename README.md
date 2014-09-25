@@ -66,6 +66,8 @@ We no longer support Ruby 1.8 or versions of Rails/ActiveRecord older than 3.0. 
 Moving forward we will do our best to support the latest versions of ActiveRecord and Ruby.
 
 ## Change Log
+* 2.1.0 - September 25, 2014
+	* Added TreeWalker. See #30 -- 545ch4
 * 2.0.0 - July 3, 2014
 	* Renamed Presentation module to TreeView, see #27, #28 -- felixbuenemann
 * 1.6.1 - May 29, 2014
